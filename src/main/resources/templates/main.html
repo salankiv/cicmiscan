@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+</head>
+<body>
+<h2>This is the main page</h2>
+<form th:object="${amadeusRequest}" th:action="@{/search}" method="post">
+    <p>Origin</p>
+    <input th:field="*{origin}" th:name="origin"/>
+    <p>Destination</p>
+    <input th:field="*{destination}" th:name="destination"/>
+    <p>Departure</p>
+    <input th:field="*{departure_date}" th:name="departure_date" placeholder="yyyy-mm-dd"/>
+    <p>Return</p>
+    <input th:field="*{return_date}" th:name="return_date" placeholder="yyyy-mm-dd"/>
+    <p>Adults</p>
+    <input th:field="*{adults}" th:name="adults"/>
+    <p>Max price</p>
+    <input th:field="*{max_price}" th:name="max_price"/>
+    <p>Currency</p>
+    <input th:field="*{currency}" th:name="currency"/>
+    <p>Number of results</p>
+    <input th:field="*{number_of_results}" th:name="number_of_results"/>
+    <input type="submit" value="Search"/>
+</form>
+
+<table>
+    <tr align="center">
+        <th>Currency</th>
+    </tr>
+    <tr>
+        <td th:text="${newRoot}"></td>
+    </tr>
+</table>
+</body>
+</html>
