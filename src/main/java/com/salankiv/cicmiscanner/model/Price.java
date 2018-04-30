@@ -1,13 +1,13 @@
 package com.salankiv.cicmiscanner.model;
 
 public class Price {
-	double total_price;
+	String total_price;
 	Fare price_per_adult;
 	Fare price_per_child;
 	Fare price_per_infant;
 	Restriction restrictions;
 
-	public Price(double total_price, Fare price_per_adult, Fare price_per_child, Fare price_per_infant, Restriction restrictions) {
+	public Price(String total_price, Fare price_per_adult, Fare price_per_child, Fare price_per_infant, Restriction restrictions) {
 		this.total_price = total_price;
 		this.price_per_adult = price_per_adult;
 		this.price_per_child = price_per_child;
@@ -18,11 +18,11 @@ public class Price {
 	public Price() {
 	}
 
-	public double getTotal_price() {
+	public String getTotal_price() {
 		return total_price;
 	}
 
-	public void setTotal_price(double total_price) {
+	public void setTotal_price(String total_price) {
 		this.total_price = total_price;
 	}
 

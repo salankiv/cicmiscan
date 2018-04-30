@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Cicmiscan</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+<ul class="nav nav-tabs">
+    <li>
+        <a href="/">Home</a>
+    </li>
+    <li class="active"><a href="">Origin only</a></li>
+</ul>
+<h2>Origin only</h2>
+<form class="form-inline, container" th:object="${searchRequest}" th:action="@{/originsearch}" method="post">
+    <div class="form-group">
+        <label for="origin">Origin:</label>
+        <select class="form-control" th:field="*{origin}" th:name="origin" id="origin">
+            <option th:each="iata : ${iatas}" th:value="${iata.getCode()}" th:text="${iata.getAirport()}"></option>
+        </select>
+    </div>
+    <div class="checkbox">
+        <label><input type="checkbox" th:field="*{oneway}" name="return" value="true"/>One way</label>
+    </div>
+    <br/>
+    <div class="form-group">
+        <label for="departure">Departure date:</label>
+        <input th:field="*{departure_date}" th:name="departure_date" id="departure" placeholder="yyyy-mm-dd--yyyy-mm-dd"/>
+    </div>
+    <br/>
+    <div class="form-group">
+        <label for="duration">Duration in days:</label>
+        <input th:field="*{duration}" th:name="duration" id="duration" placeholder="1--15"/>
+        <label for="price">Max price:</label>
+        <input th:field="*{max_price}" th:name="max_price" id="price"/>
+    </div>
+    <br/>
+    <div class="checkbox">
+        <label><input type="checkbox" th:field="*{direct}" name="direct" value="true"/>Direct only</label>
+    </div>
+    <input type="submit" value="Search"/>
+</form>
+<br/>
+<br/>
+<br/>
+<div class="container">
+    <h2>Results</h2>
+    <table class="table" th:each="result : ${newRoot.getResults()}">
+        <thead>
+        <tr>
+            <th>Origin</th>
+            <th>Currency</th>
+            <th>Destination</th>
+            <th>Departure date</th>
+            <th>Return date</th>
+            <th>Price</th>
+            <th>Airline</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td th:text="${newRoot.getOrigin()}"></td>
+            <td th:text="${newRoot.getCurrency()}"></td>
+            <td th:text="${result.getDestination()}"></td>
+            <td th:text="${result.getDeparture_date()}"></td>
+            <td th:text="${result.getReturn_date()}"></td>
+            <td th:text="${result.getPrice()}"></td>
+            <td th:text="${result.getAirline()}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

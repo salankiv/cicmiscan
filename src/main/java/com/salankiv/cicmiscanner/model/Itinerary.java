@@ -3,10 +3,10 @@ package com.salankiv.cicmiscanner.model;
 import java.util.List;
 
 public class Itinerary {
-	List<Bound> outbound;
-	List<Bound> inbound;
+	Bound outbound;
+	Bound inbound;
 
-	public Itinerary(List<Bound> outbound, List<Bound> inbound) {
+	public Itinerary(Bound outbound, Bound inbound) {
 		this.outbound = outbound;
 		this.inbound = inbound;
 	}
@@ -14,19 +14,19 @@ public class Itinerary {
 	public Itinerary() {
 	}
 
-	public List<Bound> getOutbound() {
+	public Bound getOutbound() {
 		return outbound;
 	}
 
-	public void setOutbound(List<Bound> outbound) {
+	public void setOutbound(Bound outbound) {
 		this.outbound = outbound;
 	}
 
-	public List<Bound> getInbound() {
+	public Bound getInbound() {
 		return inbound;
 	}
 
-	public void setInbound(List<Bound> inbound) {
+	public void setInbound(Bound inbound) {
 		this.inbound = inbound;
 	}
 }

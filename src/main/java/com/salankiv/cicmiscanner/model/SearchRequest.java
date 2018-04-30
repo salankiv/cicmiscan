@@ -1,30 +1,25 @@
 package com.salankiv.cicmiscanner.model;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class SearchRequest {
-	String apikey;
-	String origin;
-	String destination;
-	String departure_date;
-	String return_date;
-	int adults;
-	int max_price;
-	String currency;
-	int number_of_results;
+	private String apikey;
+	private String origin;
+	private String destination;
+	private String departure_date;
+	private String return_date;
+	private int adults;
+	private int max_price;
+	private String currency;
+	private int number_of_results;
+	private boolean oneway;
+	private String duration;
+	private boolean direct;
+	private boolean origin_only;
 
 	public SearchRequest() {
-		this.apikey = System.getenv("API_KEY");
-	}
-
-	public SearchRequest(String apikey, String origin, String destination, String departure_date, String return_date, int adults, int max_price, String currency, int number_of_results) {
-		this.apikey = System.getenv("API_KEY");
-		this.origin = origin;
-		this.destination = destination;
-		this.departure_date = departure_date;
-		this.return_date = return_date;
-		this.adults = adults;
-		this.max_price = max_price;
-		this.currency = currency;
-		this.number_of_results = number_of_results;
+		this.apikey = System.getenv("apikey.text");
 	}
 
 	public String getApikey() {
@@ -97,5 +92,37 @@ public class SearchRequest {
 
 	public void setNumber_of_results(int number_of_results) {
 		this.number_of_results = number_of_results;
+	}
+
+	public boolean isOneway() {
+		return oneway;
+	}
+
+	public void setOneway(boolean oneway) {
+		this.oneway = oneway;
+	}
+
+	public String getDuration() {
+		return duration;
+	}
+
+	public void setDuration(String duration) {
+		this.duration = duration;
+	}
+
+	public boolean isDirect() {
+		return direct;
+	}
+
+	public void setDirect(boolean direct) {
+		this.direct = direct;
+	}
+
+	public boolean isOrigin_only() {
+		return origin_only;
+	}
+
+	public void setOrigin_only(boolean origin_only) {
+		this.origin_only = origin_only;
 	}
 }
