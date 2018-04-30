@@ -1,8 +1,6 @@
 package com.salankiv.cicmiscanner.controller;
 
-import com.salankiv.cicmiscanner.model.SearchRequest;
-import com.salankiv.cicmiscanner.model.Root;
-import com.salankiv.cicmiscanner.model.IataRepo;
+import com.salankiv.cicmiscanner.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Controller;
@@ -12,11 +10,16 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.List;
+
 @Controller
 public class MainController {
 
 	@Autowired
-	IataRepo iataRepo;
+	IataAirportRepo iataAirportRepo;
+
+	@Autowired
+	IataAirlineRepo iataAirlineRepo;
 
 	@Bean
 	public SearchRequest getSearchRequest() {
@@ -26,7 +29,7 @@ public class MainController {
 	@GetMapping(value = {"", "/"})
 	public String loadMain(Model model) {
 		model.addAttribute("searchRequest", getSearchRequest());
-		model.addAttribute("iatas", iataRepo.findAll());
+		model.addAttribute("airports", iataAirportRepo.findAll());
 		return "main";
 	}
 
@@ -49,7 +52,7 @@ public class MainController {
 		Root newRoot = request.getForObject(url, Root.class);
 		model.addAttribute("results", newRoot.getResults());
 		model.addAttribute("searchRequest", searchRequest);
-		model.addAttribute("iatas", iataRepo.findAll());
+		model.addAttribute("airports", iataAirportRepo.findAll());
 		return "main";
 	}
 
@@ -57,7 +60,7 @@ public class MainController {
 	public String loadOrigin(Model model) {
 		model.addAttribute("searchRequest", getSearchRequest());
 		model.addAttribute("newRoot", new Root());
-		model.addAttribute("iatas", iataRepo.findAll());
+		model.addAttribute("airports", iataAirportRepo.findAll());
 		return "origin";
 	}
 
@@ -84,9 +87,11 @@ public class MainController {
 		}
 		RestTemplate request = new RestTemplate();
 		Root newRoot = request.getForObject(url, Root.class);
+		List<IataAirline> airlines =  new AirlineList(newRoot.getResults(), iataAirlineRepo).getAirlineList();
 		model.addAttribute("newRoot", newRoot);
 		model.addAttribute("searchRequest", searchRequest);
-		model.addAttribute("iatas", iataRepo.findAll());
+		model.addAttribute("airports", iataAirportRepo.findAll());
+		model.addAttribute("airlines", airlines);
 		return "origin";
 	}
 }

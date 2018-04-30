@@ -20,7 +20,7 @@
     <div class="form-group">
         <label for="origin">Origin:</label>
         <select class="form-control" th:field="*{origin}" th:name="origin" id="origin">
-            <option th:each="iata : ${iatas}" th:value="${iata.getCode()}" th:text="${iata.getAirport()}"></option>
+            <option th:each="airport : ${airports}" th:value="${airport.getCode()}" th:text="${airport.getAirport()}"></option>
         </select>
     </div>
     <div class="checkbox">
@@ -49,7 +49,7 @@
 <br/>
 <div class="container">
     <h2>Results</h2>
-    <table class="table" th:each="result : ${newRoot.getResults()}">
+    <table class="table" th:each="result,iter : ${newRoot.getResults()}">
         <thead>
         <tr>
             <th>Origin</th>
@@ -69,7 +69,7 @@
             <td th:text="${result.getDeparture_date()}"></td>
             <td th:text="${result.getReturn_date()}"></td>
             <td th:text="${result.getPrice()}"></td>
-            <td th:text="${result.getAirline()}"></td>
+            <td th:text="${airlines.get(iter.index).getAirline()}"></td>
         </tr>
         </tbody>
     </table>

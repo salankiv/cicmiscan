@@ -4,18 +4,18 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "iata_airport_codes")
-public class Iata {
+public class IataAirport {
 
     @Id
     String airport;
     String code;
 
-    public Iata(String airport, String code) {
+    public IataAirport(String airport, String code) {
         this.airport = airport;
         this.code = code;
     }
 
-    public Iata() {
+    public IataAirport() {
     }
 
     public String getAirport() {

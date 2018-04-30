@@ -20,11 +20,11 @@
     <div class="form-group">
         <label for="origin">Origin:</label>
         <select class="form-control" th:field="*{origin}" th:name="origin" id="origin">
-            <option th:each="iata : ${iatas}" th:value="${iata.getCode()}" th:text="${iata.getAirport()}"></option>
+            <option th:each="airport : ${airports}" th:value="${airport.getCode()}" th:text="${airport.getAirport()}"></option>
         </select>
         <label for="destination">Destination:</label>
         <select class="form-control" th:field="*{destination}" th:name="destination" id="destination">
-            <option th:each="iata : ${iatas}" th:value="${iata.getCode()}" th:text="${iata.getAirport()}"></option>
+            <option th:each="airport : ${airports}" th:value="${airport.getCode()}" th:text="${airport.getAirport()}"></option>
         </select>
     </div>
     <br/>
