@@ -11,7 +11,7 @@
 <body>
 <ul class="nav nav-tabs">
     <li class="active">
-        <a href="#">Home</a>
+        <a href="/">Home</a>
     </li>
     <li><a href="/origin">Origin only</a></li>
 </ul>
@@ -44,13 +44,13 @@
     <br/>
     <div class="form-group">
         <label for="adults">Adults number:</label>
-        <input th:field="*{adults}" th:name="adults" id="adults"/>
+        <input th:field="*{adults}" th:name="adults" id="adults" placeholder="1"/>
         <label for="price">Max price:</label>
-        <input th:field="*{max_price}" th:name="max_price" id="price"/>
+        <input th:field="*{max_price}" th:name="max_price" id="price" placeholder="100"/>
         <label for="currency">Currency:</label>
-        <input th:field="*{currency}" th:name="currency" id="currency"/>
+        <input th:field="*{currency}" th:name="currency" id="currency" th:value="CAD" placeholder="CAD"/>
         <label for="result">Number of results:</label>
-        <input th:field="*{number_of_results}" th:name="number_of_results" id="result"/>
+        <input th:field="*{number_of_results}" th:name="number_of_results" id="result" placeholder="5"/>
     </div>
     <input type="submit" value="Search"/>
 </form>

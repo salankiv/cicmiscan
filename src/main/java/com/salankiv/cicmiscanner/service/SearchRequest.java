@@ -1,4 +1,4 @@
-package com.salankiv.cicmiscanner.model;
+package com.salankiv.cicmiscanner.service;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
@@ -17,6 +17,9 @@ public class SearchRequest {
 	private String duration;
 	private boolean direct;
 	private boolean origin_only;
+
+	private String lowFareSearchUrl;
+	private String inspirationSearchUrl;
 
 	public SearchRequest() {
 		this.apikey = System.getenv("apikey.text");
@@ -124,5 +127,57 @@ public class SearchRequest {
 
 	public void setOrigin_only(boolean origin_only) {
 		this.origin_only = origin_only;
+	}
+
+	public String getLowFareSearchUrl() {
+		this.lowFareSearchUrl = System.getenv("low-fare-url");
+		this.lowFareSearchUrl += "origin=" + this.getOrigin();
+		this.lowFareSearchUrl += "&destination=" + this.getDestination();
+		this.lowFareSearchUrl += "&departure_date=" + this.getDeparture_date();
+		if (this.isOneway() == false) {
+			this.lowFareSearchUrl += "&return_date=" + this.getReturn_date();
+		}
+		if (this.getAdults() != 0) {
+			this.lowFareSearchUrl += "&adults=" + this.getAdults();
+		} else {
+			this.lowFareSearchUrl += "&adults=1";
+		}
+		if (this.getMax_price() != 0) {
+			this.lowFareSearchUrl += "&max_price=" + this.getMax_price();
+		}
+		if (!this.getCurrency().equals("")) {
+			this.lowFareSearchUrl += "&currency=" + this.getCurrency();
+		}
+		if (this.getNumber_of_results() != 0) {
+			this.lowFareSearchUrl += "&number_of_results=" + this.getNumber_of_results();
+		} else {
+			this.lowFareSearchUrl += "&number_of_results=5";
+		}
+		this.lowFareSearchUrl += "&apikey=" + this.getApikey();
+
+		return this.lowFareSearchUrl;
+	}
+
+	public String getInspirationSearchUrl() {
+		this.inspirationSearchUrl = System.getenv("inspiration-url");
+		this.inspirationSearchUrl += "apikey=" + this.getApikey();
+		this.inspirationSearchUrl += "&origin=" + this.getOrigin();
+		if (!this.getDeparture_date().equals("")) {
+			this.inspirationSearchUrl += "&departure_date=" + this.getDeparture_date();
+		}
+		if (this.isOneway() == true) {
+			this.inspirationSearchUrl += "&one-way=true";
+		}
+		if (this.isDirect() == true) {
+			this.inspirationSearchUrl += "&direct=true";
+		}
+		if (!this.getDuration().equals("")) {
+			this.inspirationSearchUrl += "&duration=" + this.getDuration();
+		}
+		if (this.getMax_price() != 0) {
+			this.inspirationSearchUrl += "&max_price=" + this.getMax_price();
+		}
+
+		return this.inspirationSearchUrl;
 	}
 }

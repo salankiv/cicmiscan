@@ -1,6 +1,7 @@
 package com.salankiv.cicmiscanner.controller;
 
 import com.salankiv.cicmiscanner.model.*;
+import com.salankiv.cicmiscanner.service.SearchRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Controller;
@@ -35,21 +36,8 @@ public class MainController {
 
 	@PostMapping(value = "/search")
 	public String search(@ModelAttribute SearchRequest searchRequest, Model model) {
-
-		String url = "https://api.sandbox.amadeus.com/v1.2/flights/low-fare-search?";
-		url += "origin=" + searchRequest.getOrigin();
-		url += "&destination=" + searchRequest.getDestination();
-		url += "&departure_date=" + searchRequest.getDeparture_date();
-		if (searchRequest.isOneway() == false) {
-			url += "&return_date=" + searchRequest.getReturn_date();
-		}
-		url += "&adults=" + searchRequest.getAdults();
-		url += "&max_price=" + searchRequest.getMax_price();
-		url += "&currency=" + searchRequest.getCurrency();
-		url += "&number_of_results=" + searchRequest.getNumber_of_results();
-		url += "&apikey=" + searchRequest.getApikey();
 		RestTemplate request = new RestTemplate();
-		Root newRoot = request.getForObject(url, Root.class);
+		Root newRoot = request.getForObject(searchRequest.getLowFareSearchUrl(), Root.class);
 		model.addAttribute("results", newRoot.getResults());
 		model.addAttribute("searchRequest", searchRequest);
 		model.addAttribute("airports", iataAirportRepo.findAll());
@@ -66,27 +54,8 @@ public class MainController {
 
 	@PostMapping(value = "/originsearch")
 	public String searchOrigin(@ModelAttribute SearchRequest searchRequest, Model model) {
-
-		String url = "https://api.sandbox.amadeus.com/v1.2/flights/inspiration-search?";
-		url += "apikey=" + searchRequest.getApikey();
-		url += "&origin=" + searchRequest.getOrigin();
-		if (!searchRequest.getDeparture_date().equals("")) {
-			url += "&departure_date=" + searchRequest.getDeparture_date();
-		}
-		if (searchRequest.isOneway() == true) {
-			url += "&one-way=true";
-		}
-		if (searchRequest.isDirect() == true) {
-			url += "&direct=true";
-		}
-		if (!searchRequest.getDuration().equals("")) {
-			url += "&duration=" + searchRequest.getDuration();
-		}
-		if (searchRequest.getMax_price() != 0) {
-			url += "&max_price=" + searchRequest.getMax_price();
-		}
 		RestTemplate request = new RestTemplate();
-		Root newRoot = request.getForObject(url, Root.class);
+		Root newRoot = request.getForObject(searchRequest.getInspirationSearchUrl(), Root.class);
 		List<IataAirline> airlines =  new AirlineList(newRoot.getResults(), iataAirlineRepo).getAirlineList();
 		model.addAttribute("newRoot", newRoot);
 		model.addAttribute("searchRequest", searchRequest);
