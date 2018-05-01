@@ -76,18 +76,18 @@
             <td>OUT</td>
             <td th:text="${flight.getDeparts_at()}"></td>
             <td th:text="${flight.getArrives_at()}"></td>
-            <td th:text="${flight.getOrigin().getAirport()}"></td>
-            <td th:text="${flight.getDestination().getAirport()}"></td>
-            <td th:text="${flight.getMarketing_airline()}"></td>
+            <td th:text="${airportFinder.findAirport(flight.getOrigin().getAirport())}"></td>
+            <td th:text="${airportFinder.findAirport(flight.getDestination().getAirport())}"></td>
+            <td th:text="${airlineFinder.findAirline(flight.getMarketing_airline())}"></td>
             <td th:text="${result.getFare().getTotal_price()}"></td>
         </tr>
         <tr th:each="flight : ${itinerary.getInbound().getFlights()}">
             <td>IN</td>
             <td th:text="${flight.getDeparts_at()}"></td>
             <td th:text="${flight.getArrives_at()}"></td>
-            <td th:text="${flight.getOrigin().getAirport()}"></td>
-            <td th:text="${flight.getDestination().getAirport()}"></td>
-            <td th:text="${flight.getMarketing_airline()}"></td>
+            <td th:text="${airportFinder.findAirport(flight.getOrigin().getAirport())}"></td>
+            <td th:text="${airportFinder.findAirport(flight.getDestination().getAirport())}"></td>
+            <td th:text="${airlineFinder.findAirline(flight.getMarketing_airline())}"></td>
             <td th:text="${result.getFare().getTotal_price()}"></td>
         </tr>
         </tbody>
@@ -96,9 +96,9 @@
             <td>OUT</td>
             <td th:text="${flight.getDeparts_at()}"></td>
             <td th:text="${flight.getArrives_at()}"></td>
-            <td th:text="${flight.getOrigin().getAirport()}"></td>
-            <td th:text="${flight.getDestination().getAirport()}"></td>
-            <td th:text="${flight.getMarketing_airline()}"></td>
+            <td th:text="${airportFinder.findAirport(flight.getOrigin().getAirport())}"></td>
+            <td th:text="${airportFinder.findAirport(flight.getDestination().getAirport())}"></td>
+            <td th:text="${airlineFinder.findAirline(flight.getMarketing_airline())}"></td>
             <td th:text="${result.getFare().getTotal_price()}"></td>
         </tr>
         </tbody>

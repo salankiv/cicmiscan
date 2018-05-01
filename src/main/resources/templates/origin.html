@@ -63,13 +63,13 @@
         </thead>
         <tbody>
         <tr>
-            <td th:text="${newRoot.getOrigin()}"></td>
+            <td th:text="${airportFinder.findAirport(newRoot.getOrigin())}"></td>
             <td th:text="${newRoot.getCurrency()}"></td>
-            <td th:text="${result.getDestination()}"></td>
+            <td th:text="${airportFinder.findAirport(result.getDestination())}"></td>
             <td th:text="${result.getDeparture_date()}"></td>
             <td th:text="${result.getReturn_date()}"></td>
             <td th:text="${result.getPrice()}"></td>
-            <td th:text="${airlines.get(iter.index).getAirline()}"></td>
+            <td th:text="${airlineFinder.findAirline(result.getAirline())}"></td>
         </tr>
         </tbody>
     </table>

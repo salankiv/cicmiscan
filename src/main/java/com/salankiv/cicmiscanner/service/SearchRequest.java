@@ -1,7 +1,9 @@
 package com.salankiv.cicmiscanner.service;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import org.springframework.stereotype.Service;
 
+@Service
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class SearchRequest {
 	private String apikey;

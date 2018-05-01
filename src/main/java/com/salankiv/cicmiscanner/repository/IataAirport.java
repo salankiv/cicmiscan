@@ -1,4 +1,4 @@
-package com.salankiv.cicmiscanner.model;
+package com.salankiv.cicmiscanner.repository;
 
 import javax.persistence.*;
 
