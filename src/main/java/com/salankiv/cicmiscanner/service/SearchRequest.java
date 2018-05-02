@@ -147,7 +147,7 @@ public class SearchRequest {
 		if (this.getMax_price() != 0) {
 			this.lowFareSearchUrl += "&max_price=" + this.getMax_price();
 		}
-		if (!this.getCurrency().equals("")) {
+		if (this.getCurrency() != null && !this.getCurrency().isEmpty()) {
 			this.lowFareSearchUrl += "&currency=" + this.getCurrency();
 		}
 		if (this.getNumber_of_results() != 0) {

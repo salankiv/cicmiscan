@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Cicmiscan</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+<ul class="nav nav-tabs">
+    <li>
+        <a href="/">Home</a>
+    </li>
+    <li>
+        <a href="/origin">Origin only</a>
+    </li>
+    <li class="active"><a href="/api">Api</a></li>
+</ul>
+<h2>Api call</h2>
+<form class="form-inline, container" th:object="${taskScheduler}" th:action="@{/apiset}" method="post">
+    <div class="form-group">
+        <label for="origin">Origin:</label>
+        <select class="form-control" th:field="*{origin}" th:name="origin" id="origin">
+            <option th:each="airport : ${airports}" th:value="${airport.getCode()}" th:text="${airport.getAirport()}"></option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="price">Max price:</label>
+        <input th:field="*{max_price}" th:name="max_price" id="price"/>
+    </div>
+    <div class="form-group">
+        <label for="currency">Currency:</label>
+        <input th:field="*{currency}" th:name="currency" id="currency"/>
+    </div>
+    <br/>
+    <input type="submit" value="Modify"/>
+</form>
+<form class="form-inline, container" action="/apisearch" method="post">
+    <br/>
+    <br/>
+    <input type="submit" value="Check results" />
+</form>
+</body>
+</html>

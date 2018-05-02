@@ -11,6 +11,11 @@ public class AirportFinder {
     IataAirportRepo iataAirportRepo;
 
     public String findAirport(String code) {
-        return iataAirportRepo.findByCode(code).getAirport();
+        try {
+            return iataAirportRepo.findByCode(code).getAirport();
+        } catch (NullPointerException e) {
+            return code;
+        }
+
     }
 }

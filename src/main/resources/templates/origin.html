@@ -14,6 +14,9 @@
         <a href="/">Home</a>
     </li>
     <li class="active"><a href="/origin">Origin only</a></li>
+    <li>
+        <a href="/api">Api</a>
+    </li>
 </ul>
 <h2>Origin only</h2>
 <form class="form-inline, container" th:object="${searchRequest}" th:action="@{/originsearch}" method="post">
@@ -49,7 +52,7 @@
 <br/>
 <div class="container">
     <h2>Results</h2>
-    <table class="table" th:each="result,iter : ${newRoot.getResults()}">
+    <table class="table" th:each="result : ${newRoot.getResults()}">
         <thead>
         <tr>
             <th>Origin</th>

@@ -1,18 +1,22 @@
 package com.salankiv.cicmiscanner.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.salankiv.cicmiscanner.logic.Alert;
 import com.salankiv.cicmiscanner.model.*;
 import com.salankiv.cicmiscanner.repository.IataAirlineRepo;
 import com.salankiv.cicmiscanner.repository.IataAirportRepo;
-import com.salankiv.cicmiscanner.service.AirlineFinder;
-import com.salankiv.cicmiscanner.service.AirportFinder;
-import com.salankiv.cicmiscanner.service.SearchRequest;
+import com.salankiv.cicmiscanner.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.config.Task;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
+
+import java.io.IOException;
 
 @Controller
 public class MainController {
@@ -28,6 +32,17 @@ public class MainController {
 
 	@Autowired
 	AirlineFinder airlineFinder;
+
+	@Autowired
+	ApiHandler apiHandler;
+
+	@Autowired
+	TaskScheduler taskScheduler;
+
+/*	@Autowired
+	Alert alert;*/
+
+	//executes low-fare search
 
 	@GetMapping(value = {"", "/"})
 	public String loadMain(Model model) {
@@ -48,6 +63,8 @@ public class MainController {
 		return "main";
 	}
 
+	//executes inspiration search
+
 	@GetMapping(value = "/origin")
 	public String loadOrigin(Model model) {
 		model.addAttribute("searchRequest", new SearchRequest());
@@ -66,5 +83,30 @@ public class MainController {
 		model.addAttribute("airportFinder", airportFinder);
 		model.addAttribute("airlineFinder", airlineFinder);
 		return "origin";
+	}
+
+	//executes api calls
+
+	@GetMapping(value = "/api")
+	public String loadApi(Model model) {
+		model.addAttribute("taskScheduler", taskScheduler);
+		model.addAttribute("airports", iataAirportRepo.findAll());
+		return "api";
+	}
+
+	@PostMapping(value = "/apiset")
+	public String loadApi(@ModelAttribute TaskScheduler newTaskScheduler, Model model) {
+		taskScheduler.setOrigin(newTaskScheduler.getOrigin());
+		taskScheduler.setCurrency(newTaskScheduler.getCurrency());
+		taskScheduler.setMax_price(newTaskScheduler.getMax_price());
+		model.addAttribute("taskScheduler", taskScheduler);
+		model.addAttribute("airports", iataAirportRepo.findAll());
+		return "api";
+	}
+
+	@PostMapping(value = "/apisearch")
+	@ResponseBody
+	public String searchApi() {
+		return taskScheduler.automatedSearch();
 	}
 }
