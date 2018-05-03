@@ -3,10 +3,10 @@ package com.salankiv.cicmiscanner.logic;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.salankiv.cicmiscanner.model.Root;
 import com.salankiv.cicmiscanner.service.ApiHandler;
+import com.salankiv.cicmiscanner.service.EmailSender;
 import com.salankiv.cicmiscanner.service.SearchRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 
@@ -16,17 +16,11 @@ public class Alert {
     @Autowired
     ApiHandler apiHandler;
 
-    public void checkLogic(SearchRequest searchRequest) {
+    @Autowired
+    EmailSender emailSender;
 
-        ObjectMapper objectMapper = new ObjectMapper();
-        apiHandler.sendRequest(searchRequest.getInspirationSearchUrl());
-
-        try {
-            Root newRoot = objectMapper.readValue(apiHandler.getResponse(), Root.class);
-            checkLowFare(newRoot);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public void checkLogic(String response) {
+        checkLowFare(mapper(response));
     }
 
     public void checkLowFare(Root root) {
@@ -42,8 +36,25 @@ public class Alert {
                 newSearchRequest.setOneway(true);
 
                 apiHandler.sendRequest(newSearchRequest.getLowFareSearchUrl());
-                System.out.println(apiHandler.getResponse());
+
+                String inspirationPrice = root.getResults()[i].getPrice();
+                String lowFarePrice = mapper(apiHandler.getResponse()).getResults()[0].getPrice();
+
+                if (inspirationPrice.equals(lowFarePrice)) {
+                    emailSender.sendEmail(apiHandler.getResponse());
+                }
             }
         }
+    }
+
+    public Root mapper(String response) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            Root root = objectMapper.readValue(response, Root.class);
+            return root;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return new Root();
     }
 }

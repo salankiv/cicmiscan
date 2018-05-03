@@ -1,13 +1,14 @@
 package com.salankiv.cicmiscanner.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.salankiv.cicmiscanner.logic.Alert;
 import com.salankiv.cicmiscanner.model.*;
 import com.salankiv.cicmiscanner.repository.IataAirlineRepo;
 import com.salankiv.cicmiscanner.repository.IataAirportRepo;
 import com.salankiv.cicmiscanner.service.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.config.Task;
+import org.springframework.mail.MailException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,10 +17,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 
-import java.io.IOException;
-
 @Controller
 public class MainController {
+
+	private Logger logger = LoggerFactory.getLogger(MainController.class);
 
 	@Autowired
 	IataAirportRepo iataAirportRepo;
@@ -39,8 +40,8 @@ public class MainController {
 	@Autowired
 	TaskScheduler taskScheduler;
 
-/*	@Autowired
-	Alert alert;*/
+	@Autowired
+	EmailSender emailSender;
 
 	//executes low-fare search
 
@@ -107,6 +108,11 @@ public class MainController {
 	@PostMapping(value = "/apisearch")
 	@ResponseBody
 	public String searchApi() {
+		/*try {
+			emailSender.sendEmail(taskScheduler.automatedSearch());
+		} catch (MailException e) {
+			logger.info("Error sending email" + e.getMessage());
+		}*/
 		return taskScheduler.automatedSearch();
 	}
 }
