@@ -11,4 +11,7 @@ public interface IataAirportRepo extends CrudRepository<IataAirport, String> {
     List<IataAirport> findAll();
 
     IataAirport findByCode(String code);
+
+//use this if inspiration search (field value = 1)
+    List<IataAirport> findByInspiration(int inspiration);
 }

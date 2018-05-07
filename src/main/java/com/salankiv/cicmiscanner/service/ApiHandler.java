@@ -34,7 +34,7 @@ public class ApiHandler {
                 }
                 in.close();
                 response = content.toString();
-            } else response = "Something went wrong";
+            } else response = con.getResponseMessage();
 
             con.disconnect();
 

@@ -1,6 +1,5 @@
 package com.salankiv.cicmiscanner.controller;
 
-import com.salankiv.cicmiscanner.logic.Alert;
 import com.salankiv.cicmiscanner.model.*;
 import com.salankiv.cicmiscanner.repository.IataAirlineRepo;
 import com.salankiv.cicmiscanner.repository.IataAirportRepo;
@@ -70,7 +69,7 @@ public class MainController {
 	public String loadOrigin(Model model) {
 		model.addAttribute("searchRequest", new SearchRequest());
 		model.addAttribute("newRoot", new Root());
-		model.addAttribute("airports", iataAirportRepo.findAll());
+		model.addAttribute("airports", iataAirportRepo.findByInspiration(1));
 		return "origin";
 	}
 
@@ -80,7 +79,7 @@ public class MainController {
 		Root newRoot = request.getForObject(searchRequest.getInspirationSearchUrl(), Root.class);
 		model.addAttribute("newRoot", newRoot);
 		model.addAttribute("searchRequest", searchRequest);
-		model.addAttribute("airports", iataAirportRepo.findAll());
+		model.addAttribute("airports", iataAirportRepo.findByInspiration(1));
 		model.addAttribute("airportFinder", airportFinder);
 		model.addAttribute("airlineFinder", airlineFinder);
 		return "origin";
@@ -91,17 +90,16 @@ public class MainController {
 	@GetMapping(value = "/api")
 	public String loadApi(Model model) {
 		model.addAttribute("taskScheduler", taskScheduler);
-		model.addAttribute("airports", iataAirportRepo.findAll());
+		model.addAttribute("airports", iataAirportRepo.findByInspiration(1));
 		return "api";
 	}
 
 	@PostMapping(value = "/apiset")
 	public String loadApi(@ModelAttribute TaskScheduler newTaskScheduler, Model model) {
 		taskScheduler.setOrigin(newTaskScheduler.getOrigin());
-		taskScheduler.setCurrency(newTaskScheduler.getCurrency());
 		taskScheduler.setMax_price(newTaskScheduler.getMax_price());
 		model.addAttribute("taskScheduler", taskScheduler);
-		model.addAttribute("airports", iataAirportRepo.findAll());
+		model.addAttribute("airports", iataAirportRepo.findByInspiration(1));
 		return "api";
 	}
 

@@ -11,7 +11,6 @@ public class TaskScheduler {
     private String apikey = System.getenv("apikey.text");
     private String origin = "BUF";
     private int max_price = 100;
-    private String currency = "USD";
 
     @Autowired
     ApiHandler apiHandler;
@@ -23,7 +22,6 @@ public class TaskScheduler {
         String url = urlType;
         url += "apikey=" + this.apikey;
         url += "&origin=" + this.origin;
-        url += "&currency=" + this.currency;
         url += "&max_price=" + String.valueOf(this.max_price);
         apiHandler.sendRequest(url);
         return apiHandler.getResponse();
@@ -37,10 +35,6 @@ public class TaskScheduler {
         this.max_price = max_price;
     }
 
-    public void setCurrency(String currency) {
-        this.currency = currency;
-    }
-
     public String getOrigin() {
         return origin;
     }
@@ -49,7 +43,4 @@ public class TaskScheduler {
         return max_price;
     }
 
-    public String getCurrency() {
-        return currency;
-    }
 }

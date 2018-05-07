@@ -9,10 +9,12 @@ public class IataAirport {
     @Id
     String airport;
     String code;
+    int inspiration;
 
-    public IataAirport(String airport, String code) {
+    public IataAirport(String airport, String code, int inspiration) {
         this.airport = airport;
         this.code = code;
+        this.inspiration = inspiration;
     }
 
     public IataAirport() {
@@ -32,5 +34,13 @@ public class IataAirport {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public int getInspiration() {
+        return inspiration;
+    }
+
+    public void setInspiration(int inspiration) {
+        this.inspiration = inspiration;
     }
 }
